@@ -31,5 +31,10 @@ module App
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    config.middleware.insert(0, Rack::ReverseProxy) do
+      reverse_proxy_options preserve_host: true
+      reverse_proxy '*', 'https://example.com'
+    end
   end
 end
